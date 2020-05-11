@@ -1,0 +1,35 @@
+#server1
+---
+spring:
+  application:
+    name: stock-market-chart-eureka
+  profiles: server1
+  boot:
+    admin:
+      client:
+        url: http://localhost:9001
+        username: admin
+        password: admin
+server:
+  port: 8003
+eureka:
+  instance:
+    hostname: server1
+    prefer-ip-address: false
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: http://server2:8002/eureka/,http://server1:8001/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
